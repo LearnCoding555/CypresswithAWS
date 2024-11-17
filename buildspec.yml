@@ -5,11 +5,19 @@ phases:
     commands:
       - echo Installing dependencies...
       - npm install
+
   build:
     commands:
       - echo Running Cypress tests...
+      - chmod +x ./node_modules/.bin/cypress # Fix permission issue
       - npx cypress run --headless
+
+  post_build:
+    commands:
+      - echo Creating results directory if it does not exist...
+      - mkdir -p cypress/results # Ensure results directory exists
+      - echo Uploading reports...
+
 artifacts:
   files:
-    - "**/*"
-  base-directory: cypress/results # Optional, if you want to store test results here
+    - cypress/results/**/* # Ensure this points to the correct location for reports
