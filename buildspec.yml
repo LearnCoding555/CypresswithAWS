@@ -2,35 +2,13 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 18
     commands:
-      - echo Installing dependencies...
-      - npm install
-      - echo Installing required system libraries...
+      # Skip installing problematic packages
       - sudo apt-get update
-      - sudo apt-get install -y libatk-1.0-0 libgdk-pixbuf2.0-0 libnspr4 libnss3 libx11-xcb1
-      - echo Fixing permissions for Cypress...
-      - sudo chmod -R 777 node_modules
-      - sudo chmod -R 777 /root/.cache/cypress
-      - npx cypress install
-
-  pre_build:
-    commands:
-      - echo Pre-build phase complete.
-
+      - sudo apt-get install -y libatk1.0-0 libgdk-pixbuf2.0-0 libnspr4 libnss3 libx11-xcb1 || echo "Some dependencies not found"
+      - npm install
   build:
     commands:
-      - echo Running Cypress tests...
-      - npx cypress run --headless
-
-  post_build:
-    commands:
-      - echo Creating results directory if it does not exist...
-      - mkdir -p cypress/results
-      - echo Uploading reports...
-      - cp -R cypress/results/* /codebuild/output/results/
-
-artifacts:
-  files:
-    - "**/*"
-  base-directory: /codebuild/output/results
-  discard-paths: yes
+      - npm run cypress:run # Change to match your test run script
