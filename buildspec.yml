@@ -2,24 +2,23 @@ version: 0.2
 
 phases:
   install:
-    runtime-versions:
-      nodejs: 16
     commands:
       - echo Installing dependencies...
       - npm install
       - echo Installing Cypress...
-      - npx cypress install # Explicitly install Cypress
+      - npm install cypress --save-dev
+      - chmod +x ./node_modules/.bin/cypress
+      - npx cypress install
   build:
     commands:
       - echo Running Cypress tests...
-      - chmod +x ./node_modules/.bin/cypress
       - npx cypress run --headless
   post_build:
     commands:
       - echo Creating results directory if it does not exist...
       - mkdir -p cypress/results
       - echo Uploading reports...
+      - cp -R cypress/results/* /codebuild/output/results/
 artifacts:
   files:
-    - "**/*"
-  base-directory: "cypress/results"
+    - cypress/results/**/*
