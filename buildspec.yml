@@ -1,0 +1,15 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Installing dependencies...
+      - npm install
+  build:
+    commands:
+      - echo Running Cypress tests...
+      - npx cypress run --headless
+artifacts:
+  files:
+    - "**/*"
+  base-directory: cypress/results # Optional, if you want to store test results here
