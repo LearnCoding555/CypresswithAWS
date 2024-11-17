@@ -3,16 +3,23 @@ version: 0.2
 phases:
   install:
     commands:
-      # Install dependencies and Cypress
+      # Install required dependencies for Cypress
+      - sudo apt-get update
+      - sudo apt-get install -y libatk-1.0-0 libgdk-pixbuf2.0-0 libnspr4 libnss3 libx11-xcb1
+      # Install dependencies from npm
       - npm install
-      - chmod +x ./node_modules/.bin/cypress # Fix Cypress permissions
-      - npx cypress install # Ensure Cypress is installed correctly
+      # Fix Cypress permissions
+      - chmod +x ./node_modules/.bin/cypress
+      # Install Cypress if not installed
+      - npx cypress install
 
   build:
     commands:
-      - node -v # Check Node.js version
-      - npm -v # Check npm version
-      - npx cypress run # Run Cypress tests
+      # Verify Node and NPM versions
+      - node -v # Verify Node.js version
+      - npm -v # Verify npm version
+      # Run Cypress tests
+      - npx cypress run
 
 artifacts:
   files:
