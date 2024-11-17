@@ -1,0 +1,16 @@
+{
+  "name": "cypress-api-learn",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@shelex/cypress-allure-plugin": "^2.40.2",
+    "allure-cypress": "^3.0.6",
+    "cypress": "^13.15.2"
+  }
+}
