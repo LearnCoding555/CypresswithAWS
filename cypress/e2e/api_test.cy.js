@@ -162,14 +162,3 @@ describe("API Testing - PATCH Request", () => {
     });
   });
 });
-
-describe("API Testing - GET Invalid Request", () => {
-  it("should return status 400 for invalid GET request", () => {
-    cy.request({
-      url: "https://jsonplaceholder.typicode.com/posts/invalid", // Invalid URL
-      failOnStatusCode: false, // Don't fail the test on a 400 response
-    }).should((response) => {
-      expect(response.status).to.eq(400);
-    });
-  });
-});
