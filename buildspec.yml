@@ -3,29 +3,20 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      nodejs: 18  # Specify Node.js version 18
-    commands:
-      # Install dependencies
-      npm install
+      nodejs: 18
+    commands: npm install
 
   pre_build:
-    commands:
-      # Add any pre-build commands if necessary
-      echo Pre-build phase
+    commands: echo Pre-build phase
 
   build:
-    commands:
-      # Fix permissions for Cypress binary
-      chmod +x node_modules/.bin/cypress
-      # Run Cypress tests
+    commands: chmod +x node_modules/.bin/cypress
       npm run cypress:run
 
   post_build:
-    commands:
-      # Post-build commands if needed
-      echo Post-build phase
+    commands: echo Post-build phase
 
 artifacts:
   files:
-    - '**/*'  # Collect all files
-  discard-paths: yes  # Remove directory structure
+    - "**/*"
+  discard-paths: yes
