@@ -145,3 +145,31 @@ describe("API Testing - Response Body Validation", () => {
     );
   });
 });
+
+describe("API Testing - PATCH Request", () => {
+  it("should partially update an existing post and return status 200", () => {
+    const updatedFields = {
+      title: "partially updated title",
+    };
+
+    cy.request({
+      method: "PATCH",
+      url: "https://jsonplaceholder.typicode.com/posts/1",
+      body: updatedFields,
+    }).should((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.deep.include(updatedFields); // Ensure the updated fields are returned
+    });
+  });
+});
+
+describe("API Testing - GET Invalid Request", () => {
+  it("should return status 400 for invalid GET request", () => {
+    cy.request({
+      url: "https://jsonplaceholder.typicode.com/posts/invalid", // Invalid URL
+      failOnStatusCode: false, // Don't fail the test on a 400 response
+    }).should((response) => {
+      expect(response.status).to.eq(400);
+    });
+  });
+});
