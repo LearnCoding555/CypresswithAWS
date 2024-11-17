@@ -5,10 +5,23 @@ phases:
     runtime-versions:
       nodejs: 18
     commands:
-      # Skip installing problematic packages
-      - sudo apt-get update
-      - sudo apt-get install -y libatk1.0-0 libgdk-pixbuf2.0-0 libnspr4 libnss3 libx11-xcb1 || echo "Some dependencies not found"
-      - npm install
+      # Install dependencies
+      npm install
+  pre_build:
+    commands:
+      # Add any pre-build commands if necessary
+      echo Pre-build phase
   build:
     commands:
-      - npm run cypress:run # Change to match your test run script
+      # Fix permissions for Cypress binary
+      chmod +x node_modules/.bin/cypress
+      # Run Cypress tests
+      npm run cypress:run
+  post_build:
+    commands:
+      # Post-build commands if needed
+      echo Post-build phase
+artifacts:
+  files:
+    - '**/*'
+  discard-paths: yes
